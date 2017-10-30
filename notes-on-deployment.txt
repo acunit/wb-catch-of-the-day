@@ -1,0 +1,43 @@
+Deploying with now
+
+In package.json
+Add this to dependencies
+"serve": "^6.3.1"
+Add this to scripts
+"now-start": "serve ./build --single"
+then run now in the command line
+
+
+Deploying with GitHub Pages
+
+Include the homepage when deploying the GitHub Pages under private at top of package.json
+"homepage": "https://acunit.github.io/fish-market-app/"
+See notes inthe index.js file.
+
+
+Deploying to an Apache Server
+
+Remove the basename in the index.js if deploying to a root directory.
+If deploying to a subdirectory, you do need to keep the basename but name it the root folder
+Also, would need to keep the homepage referenced above if deploying to a subfolder
+just put in the main URL for the site and the name of the subdirectory in this spot.
+If deploying to a root folder, you do not need to include the homepage reference.
+Do 'npm run build'
+then upload the files to the server
+then go to firebase and add the domain url for authentication
+With an Apache server, create an file named '.htaccess'
+Inside this file add the lines below:
+
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteFule . /index.html [L]
+
+
+Deploying to an NGINX server
+Google NGINX single page App
+create and ngix.conf file and add:
+location / {
+try_files $url /index.html;
+}
